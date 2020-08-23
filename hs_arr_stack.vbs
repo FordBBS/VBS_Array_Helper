@@ -31,15 +31,17 @@ Function hs_arr_stack(ByRef tarValue, ByVal intLevel)
 	intLevel = CInt(intLevel)
 
 	'*** Operations ********************************************************************************
-	If intLevel > 0 Then tarValue = Array(tarValue)
+	If intLevel > 0 Then arrRes(0) = tarValue
 
 	For cnt1 = 2 to intLevel
 		Erase arrTmp
 		Redim Preserve arrTmp(0)
 		
-		arrTmp(0)   = tarValue(0)
-		tarValue(0) = arrTmp
+		arrTmp(0) = arrRes(0)
+		arrRes(0) = arrTmp
 	Next
+
+	tarValue = arrRes
 
 	'*** Error handler *****************************************************************************
 	If Err.Number <> 0 Then
