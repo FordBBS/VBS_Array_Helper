@@ -1,6 +1,7 @@
 Function hs_arr_append(ByRef arrInput, ByVal tarValue)
 	'*** History ***********************************************************************************
 	' 2020/08/23, BBS:	- First release
+	' 2020/08/25, BBS:  - Implemented handler for Non-Array 'arrInput'
 	'
 	'***********************************************************************************************
 	
@@ -14,9 +15,26 @@ Function hs_arr_append(ByRef arrInput, ByVal tarValue)
 	'
 	'***********************************************************************************************
 	
-	If Not (UBound(arrInput) = 0 and TypeName(arrInput(0)) = "Empty") Then
+	On Error Resume Next
+
+	'*** Initialization ****************************************************************************
+	' Nothing to be initialized
+
+	'*** Operations ********************************************************************************
+	'--- Ensure 'arrInput' is Array type before doing appending ------------------------------------
+	If InStr(LCase(TypeName(arrInput)), "variant") = 0 Then
+		arrInput = Array(arrInput)
+	End If
+
+	'--- Appending ---------------------------------------------------------------------------------
+	If Not (UBound(arrInput) = 0 and LCase(TypeName(arrInput(0))) = "empty") Then
 		Redim Preserve arrInput(UBound(arrInput) + 1)
 	End If
 
 	arrInput(UBound(arrInput)) = tarValue
+
+	'*** Error handler *****************************************************************************
+	If Err.Number <> 0 Then
+		Err.Clear
+	End If
 End Function
