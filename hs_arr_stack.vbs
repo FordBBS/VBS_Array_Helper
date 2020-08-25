@@ -1,6 +1,7 @@
 Function hs_arr_stack(ByRef tarValue, ByVal intLevel)
 	'*** History ***********************************************************************************
 	' 2020/08/23, BBS:	- First release
+	' 2020/08/25, BBS:	- Bug fixed, Case: 'intLevel' is less than or equal to 0
 	'
 	'***********************************************************************************************
 	
@@ -19,18 +20,18 @@ Function hs_arr_stack(ByRef tarValue, ByVal intLevel)
 	'***********************************************************************************************
 	
 	On Error Resume Next
-	hs_arr_stack = tarValue
 
 	'*** Pre-Validation ****************************************************************************
 	If Not IsNumeric(intLevel) Then Exit Function
 
 	'*** Initialization ****************************************************************************
 	Dim cnt1, arrRes(), arrTmp()
-	Redim Preserve arrRes(0)
+	Redim Preserve arrRes(0), arrTmp(0)
 
 	intLevel = CInt(intLevel)
 
 	'*** Operations ********************************************************************************
+	If intLevel <= 0 Then Exit Function
 	If intLevel > 0 Then arrRes(0) = tarValue
 
 	For cnt1 = 2 to intLevel
