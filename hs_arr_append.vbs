@@ -2,6 +2,7 @@ Function hs_arr_append(ByRef arrInput, ByVal tarValue)
 	'*** History ***********************************************************************************
 	' 2020/08/23, BBS:	- First release
 	' 2020/08/25, BBS:  - Implemented handler for Non-Array 'arrInput'
+	' 2020/09/19, BBS: 	- Improved
 	'
 	'***********************************************************************************************
 	
@@ -22,7 +23,7 @@ Function hs_arr_append(ByRef arrInput, ByVal tarValue)
 
 	'*** Operations ********************************************************************************
 	'--- Ensure 'arrInput' is Array type before doing appending ------------------------------------
-	If InStr(LCase(TypeName(arrInput)), "variant") = 0 Then
+	If Not IsArray(arrInput) Then
 		arrInput = Array(arrInput)
 	End If
 
